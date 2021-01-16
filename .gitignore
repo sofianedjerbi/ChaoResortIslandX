@@ -1,2 +1,7 @@
 *.yydebug
 *.gamelog.txt
+*.dll
+*.exe
+*.dat
+resources/*
+*.ini
