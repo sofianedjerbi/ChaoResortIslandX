@@ -1,8 +1,14 @@
-// BY KUGGE0
-// THANKS TO NEFAUL1ST !!!
+/* BY @KUGGE0
+   THANKS TO @NEFAUL1ST !!!
+*/
+using System.Drawing;
+using System.IO;
 
 EnsureDataLoaded();
 DecompileContext context = new DecompileContext(Data, false);
+
+
+// Work-around helper method to get the source file location.
 
 void FindAndReplace(string name, string find, string replace)
 {
@@ -20,11 +26,23 @@ void Append(string name, string txt)
   ChangeSelection(code);
 }
 
-//operations
-// VSYNC FIX FOR MONITORS ABOVE 60 FPS
-FindAndReplace("gml_Script_fresh_data", "v_sync = 0", "v_sync = 1");
+void ChangeImage(string name, string dir)
+{
+  Image new_img = Image.FromFile(dir);
+  Data.Sprites.ByName(name).Textures[0].Texture.ReplaceTexture(new_img);
+}
+
+// operations //
+string path = Path.GetDirectoryName(ScriptPath);
+
 // ADDING CONTACT IN CREDITS
 FindAndReplace("gml_Object_objCWCredits_Create_0", "MER#nefault1st#\")\n", "MER#nefault1st#\")\nds_list_add(credit_grid, \"X VERSION MODDER#kugge0#\")\n");
-// ADDING X TO VERSION
-Append("gml_Object_objChaoControl_Create_0", "global.x_version_number = \"0.0.0\"") // Number
-Append("gml_Object_objChaoControl_Create_0", "global.x_version_type = \"XDev\"") // Type
+// ADDING X VERSION NUMBER FOR DEBUGGING PURPOSES
+Append("gml_Object_objChaoControl_Create_0", "global.x_version_number = \"0.0.0\""); // Number
+Append("gml_Object_objChaoControl_Create_0", "global.x_version_type = \"XDev\""); // Type
+FindAndReplace("gml_Object_objCWCredits_Draw_0", "chao_v))\n", "chao_v))\ndraw_text((view_xview[0] + 210), ((view_yview[0] + floor(ymov)) + 190), (\"Mod Version: \" + global.x_version_type + \"-\" + global.x_version_number))\n"); // Display
+// CHANGE LOGOs
+ChangeImage("sprCWLogo_Rz", path + @"\patch_resources\sprCWLogo_Rz.png");
+ChangeImage("sprCWLogo", path + @"\patch_resources\sprCWLogo.png");
+// VSYNC FIX FOR MONITORS ABOVE 60 FPS
+FindAndReplace("gml_Script_fresh_data", "v_sync = 0", "v_sync = 1");
