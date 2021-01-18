@@ -32,9 +32,11 @@ void ChangeImage(string name, string dir)
   Data.Sprites.ByName(name).Textures[0].Texture.ReplaceTexture(new_img);
 }
 
-// operations //
+// Var - Context //
 string path = Path.GetDirectoryName(ScriptPath);
 
+
+/* 1- VERSION HANDLING + LOGO */
 // ADDING CONTACT IN CREDITS
 FindAndReplace("gml_Object_objCWCredits_Create_0", "MER#nefault1st#\")\n", "MER#nefault1st#\")\nds_list_add(credit_grid, \"X VERSION MODDER#kugge0#\")\n");
 // ADDING X VERSION NUMBER FOR DEBUGGING PURPOSES
@@ -44,5 +46,12 @@ FindAndReplace("gml_Object_objCWCredits_Draw_0", "chao_v))\n", "chao_v))\ndraw_t
 // CHANGE LOGOs
 ChangeImage("sprCWLogo_Rz", path + @"\patch_resources\sprCWLogo_Rz.png");
 ChangeImage("sprCWLogo", path + @"\patch_resources\sprCWLogo.png");
+
+
+/* 2- FIXES */
 // VSYNC FIX FOR MONITORS ABOVE 60 FPS
-FindAndReplace("gml_Script_fresh_data", "v_sync = 0", "v_sync = 1");
+FindAndReplace("gml_Script_fresh_data", "v_sync = 0", "v_sync = 1"); // Settings
+Append("gml_Object_objChaoControl_Create_0", "display_reset(0, 1)"); // Vsync mode
+
+/* 3- INTELLIGENCE MOD */
+FindAndReplace("gml_Object_objChaoBase_Create_0", "temp_stamina = 0\n", "temp_stamina = 0\ntemp_intelligence = 0\n") // Adding temp creation value

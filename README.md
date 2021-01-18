@@ -6,7 +6,7 @@ A modded version of Chao Resort Island.
 All credits goes to **SEGA** & **[Nefault1st](https://twitter.com/nefault1st)**.
 
 # INCOMING
-- Intelligence mod
+- Animal mod
 - Multiplayer mod
 - Karate Mod (SA2)
 - Bugfixes
