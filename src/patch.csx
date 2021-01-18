@@ -52,6 +52,8 @@ ChangeImage("sprCWLogo", path + @"\patch_resources\sprCWLogo.png");
 // VSYNC FIX FOR MONITORS ABOVE 60 FPS
 FindAndReplace("gml_Script_fresh_data", "v_sync = 0", "v_sync = 1"); // Settings
 Append("gml_Object_objChaoControl_Create_0", "display_reset(0, 1)"); // Vsync mode
+// FPS IN DEBUGGING MENU
+FindAndReplace("gml_Object_objChaoHUD_Draw_0", "ing(gamepad_axis_value(0, gp_axislv)", "ing(fps)")
 
-/* 3- INTELLIGENCE MOD */
-FindAndReplace("gml_Object_objChaoBase_Create_0", "temp_stamina = 0\n", "temp_stamina = 0\ntemp_intelligence = 0\n") // Adding temp creation value
+/* 3- CHAOS 0 MOD */
+//TODO
