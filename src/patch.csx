@@ -3,13 +3,14 @@
 */
 using System.Drawing;
 using System.IO;
+using static UndertaleModLib.Models.UndertaleSprite;
+using System.Runtime.Serialization.Formatters.Binary;
 
-EnsureDataLoaded();
-DecompileContext context = new DecompileContext(Data, false);
-
-
-// Work-around helper method to get the source file location.
-
+//=============================================================================
+/********************** EDITOR *********************
+   (High-level hacky data.win editor)
+*/
+/* Replace a string by another in a GML file */
 void FindAndReplace(string name, string find, string replace)
 {
   UndertaleCode code = Data.Code.ByName(name);
@@ -19,6 +20,7 @@ void FindAndReplace(string name, string find, string replace)
   ChangeSelection(code);
 }
 
+/* Append code at the end of a GML file */
 void Append(string name, string txt)
 {
   UndertaleCode code = Data.Code.ByName(name);
@@ -26,15 +28,38 @@ void Append(string name, string txt)
   ChangeSelection(code);
 }
 
-void ChangeImage(string name, string dir)
+/* Change a sprite with a single image */
+void ChangeImage(string name, string path)
 {
-  Image new_img = Image.FromFile(dir);
+  Image new_img = Image.FromFile(path);
   Data.Sprites.ByName(name).Textures[0].Texture.ReplaceTexture(new_img);
 }
 
+/* Replace a player sprite */
+/*
+void ReplacePlayerSprite(string name, string dir, int n=97) // n = Number of sprites - 1
+{ // Need an optimisation (Ram usage during game)
+  UndertaleSprite sprite = Data.Sprites.ByName(name);
+  UndertaleSprite player = Data.Sprites.ByName("sprCWPlayer2");
+  sprite = DeepClone(player);
+  for (int i=0; i<=n; i++)
+  {
+    Image new_img = Image.FromFile($"{dir}{i}.png");
+    sprite.Textures[i].Texture.ReplaceTexture(new_img);
+  }
+
+}*/
+/********************** EDITOR **********************/
+//=============================================================================
+/********************** PATCH **********************
+   Patch data.win with the Editor.
+*/
+EnsureDataLoaded(); // Data VAR
+DecompileContext context = new DecompileContext(Data, false); // Decompiler
+
+
 // Var - Context //
 string path = Path.GetDirectoryName(ScriptPath);
-
 
 /* 1- VERSION HANDLING + LOGO */
 // ADDING CONTACT IN CREDITS
@@ -50,10 +75,17 @@ ChangeImage("sprCWLogo", path + @"\patch_resources\sprCWLogo.png");
 
 /* 2- FIXES */
 // VSYNC FIX FOR MONITORS ABOVE 60 FPS
-FindAndReplace("gml_Script_fresh_data", "v_sync = 0", "v_sync = 1"); // Settings
-Append("gml_Object_objChaoControl_Create_0", "display_reset(0, 1)"); // Vsync mode
+FindAndReplace("gml_Script_fresh_data", "v_sync = 0", "v_sync = 1"); // Vsync enabled by default
+Append("gml_Object_objChaoControl_Create_0", "display_reset(0, 1)\n"); // Vsync mode
 // FPS IN DEBUGGING MENU
-FindAndReplace("gml_Object_objChaoHUD_Draw_0", "ing(gamepad_axis_value(0, gp_axislv)", "ing(fps)")
+FindAndReplace("gml_Object_objChaoHUD_Draw_0", "ing(gamepad_axis_value(0, gp_axislv))", "ing(fps)");
 
-/* 3- CHAOS 0 MOD */
-//TODO
+/* REQUIRED FOR PLAYER MODS*/
+FindAndReplace("gml_Object_objCharacter_Create_0", "max_char = 5", "max_char = 7"); // Unlock Chars
+
+/* 3- LATIKA MOD */
+
+/* 4- CHAOS MOD */
+//ReplacePlayerSprite("sprCWPlayer8", path + @"\patch_resources\sprCWPlayer8\");
+/********************** PATCH **********************/
+//=============================================================================
