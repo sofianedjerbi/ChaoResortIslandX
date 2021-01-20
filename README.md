@@ -1,5 +1,6 @@
 # Chao Resort Island X
 <img align="center" alt="Logo" src="src/patch_resources/sprCWLogo_Rz.png" />  
+
 ![Discord Shield](https://discordapp.com/api/guilds/[SERVER ID]/widget.png?style=shield)  
 A modded version of Chao Resort Island.  
 **I will not share the decompiled code !** According to the original license.  
