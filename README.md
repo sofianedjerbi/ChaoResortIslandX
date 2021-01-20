@@ -1,7 +1,7 @@
 # Chao Resort Island X
 <img align="center" alt="Logo" src="src/patch_resources/sprCWLogo_Rz.png" />  
 
-![Discord Shield](https://discordapp.com/api/guilds/[SERVER ID]/widget.png?style=shield)  
+![Discord Shield](https://discordapp.com/api/guilds/773578180036263936/widget.png?style=shield)  
 A modded version of Chao Resort Island.  
 **I will not share the decompiled code !** According to the original license.  
 All credits goes to **SEGA** & **[Nefault1st](https://twitter.com/nefault1st)**.
