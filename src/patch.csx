@@ -60,6 +60,7 @@ DecompileContext context = new DecompileContext(Data, false); // Decompiler
 
 // Var - Context //
 string path = Path.GetDirectoryName(ScriptPath);
+string ver = File.ReadAllText(path + @"\..\Version.txt");
 
 /* 1- VERSION HANDLING + LOGO */
 // ADDING CONTACT IN CREDITS
@@ -71,6 +72,10 @@ FindAndReplace("gml_Object_objCWCredits_Draw_0", "chao_v))\n", "chao_v))\ndraw_t
 // CHANGE LOGOs
 ChangeImage("sprCWLogo_Rz", path + @"\patch_resources\sprCWLogo_Rz.png");
 ChangeImage("sprCWLogo", path + @"\patch_resources\sprCWLogo.png");
+// CONNECT TO MOD SERVER & BETTER SERVER & BETTER BULLETIN BOARD
+FindAndReplace("gml_Script_get_blog_post","http://nefault1s.online/Blog.php", "http://web-chao-resort-island-x.herokuapp.com/blog"); // Better Server + Mod Infos
+FindAndReplace("gml_Object_objBulletinBoard_Create_0", "check_times = 10", "check_times = 1024"); // More than 10 news (Unlimited ?)
+FindAndReplace("gml_Object_objBulletinBoard_Create_0", "for (l = 0; l < 10; l++)", "for (l = 0; l < check_times; l++)"); // More than 10 news (Unlimited ?)
 
 
 /* 2- FIXES */
@@ -79,7 +84,6 @@ FindAndReplace("gml_Script_fresh_data", "v_sync = 0", "v_sync = 1"); // Vsync en
 Append("gml_Object_objChaoControl_Create_0", "display_reset(0, 1)\n"); // Vsync mode
 // FPS IN DEBUGGING MENU
 FindAndReplace("gml_Object_objChaoHUD_Draw_0", "ing(gamepad_axis_value(0, gp_axislv))", "ing(fps)");
-
 /* REQUIRED FOR PLAYER MODS*/
 FindAndReplace("gml_Object_objCharacter_Create_0", "max_char = 5", "max_char = 7"); // Unlock Chars
 
