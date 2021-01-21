@@ -76,7 +76,8 @@ ChangeImage("sprCWLogo", path + @"\patch_resources\sprCWLogo.png");
 FindAndReplace("gml_Script_get_blog_post","http://nefault1s.online/Blog.php", "http://web-chao-resort-island-x.herokuapp.com/blog"); // Better Server + Mod Infos
 FindAndReplace("gml_Object_objBulletinBoard_Create_0", "check_times = 10", "check_times = 1024"); // More than 10 news (Unlimited ?)
 FindAndReplace("gml_Object_objBulletinBoard_Create_0", "for (l = 0; l < 10; l++)", "for (l = 0; l < check_times; l++)"); // More than 10 news (Unlimited ?)
-
+FindAndReplace("gml_Object_objCWUpdates_Alarm_0", "http://n1st-update.my-free.website/", "https://github.com/Kugge/Chao-Resort-Island-X/releases/latest/"); // Change update website
+FindAndReplace("gml_Script_get_update", "http://nefault1s.online/Update.php", "http://web-chao-resort-island-x.herokuapp.com/update");
 
 /* 2- FIXES */
 // VSYNC FIX FOR MONITORS ABOVE 60 FPS
