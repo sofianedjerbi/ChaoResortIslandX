@@ -60,7 +60,8 @@ DecompileContext context = new DecompileContext(Data, false); // Decompiler
 
 // Var - Context //
 string path = Path.GetDirectoryName(ScriptPath);
-string ver = File.ReadAllText(path + @"\..\Version.txt");
+string ver_raw = File.ReadAllText(path + @"\..\Version.txt");
+string ver = ver_raw.Substring(ver_raw.IndexOf("MOD=") + 4);
 
 /* 1- VERSION HANDLING + LOGO */
 // ADDING CONTACT IN CREDITS
