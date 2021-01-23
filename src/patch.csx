@@ -35,6 +35,15 @@ void ChangeImage(string name, string path)
   Data.Sprites.ByName(name).Textures[0].Texture.ReplaceTexture(new_img);
 }
 
+/* Replace whole GML */
+void Replace(string name, string path)
+{
+  UndertaleCode code = Data.Code.ByName(name);
+  string txt = File.ReadAllText(path);
+  code.ReplaceGML(txt, Data);
+  ChangeSelection(code);
+}
+
 /* Replace a player sprite */
 /*
 void ReplacePlayerSprite(string name, string dir, int n=97) // n = Number of sprites - 1
@@ -61,24 +70,33 @@ DecompileContext context = new DecompileContext(Data, false); // Decompiler
 // Var - Context //
 string path = Path.GetDirectoryName(ScriptPath);
 string ver_raw = File.ReadAllText(path + @"\..\Version.txt");
-string ver = ver_raw.Substring(ver_raw.IndexOf("MOD=") + 4);
+string mod_ver_string = ver_raw.Substring(ver_raw.IndexOf("MOD=") + 4);
+string mod_ver_int_raw = ver_raw.Substring(ver_raw.IndexOf("XVERSION=") + 9);
+string mod_ver_int = mod_ver_int_raw.Substring(0, mod_ver_int_raw.IndexOf(Environment.NewLine));
 
 /* 1- VERSION HANDLING + LOGO */
 // ADDING CONTACT IN CREDITS
 FindAndReplace("gml_Object_objCWCredits_Create_0", "MER#nefault1st#\")\n", "MER#nefault1st#\")\nds_list_add(credit_grid, \"X VERSION MODDER#kugge0#\")\n");
 // ADDING X VERSION NUMBER FOR DEBUGGING PURPOSES
-Append("gml_Object_objChaoControl_Create_0", "global.x_version_number = \"0.0.0\""); // Number
-Append("gml_Object_objChaoControl_Create_0", "global.x_version_type = \"XDev\""); // Type
-FindAndReplace("gml_Object_objCWCredits_Draw_0", "chao_v))\n", "chao_v))\ndraw_text((view_xview[0] + 210), ((view_yview[0] + floor(ymov)) + 190), (\"Mod Version: \" + global.x_version_type + \"-\" + global.x_version_number))\n"); // Display
+Append("gml_Object_objChaoControl_Create_0", $"global.x_version = \"{mod_ver_string}\""); // Number
+Append("gml_Object_objChaoControl_Create_0", $"global.x_version_int = {mod_ver_int}"); // INT for updates
+FindAndReplace("gml_Object_objCWCredits_Draw_0", "chao_v))\n", "chao_v))\ndraw_text((view_xview[0] + 210), ((view_yview[0] + floor(ymov)) + 190), (\"Mod Version: \" + global.x_version))\n"); // Display
 // CHANGE LOGOs
 ChangeImage("sprCWLogo_Rz", path + @"\patch_resources\sprCWLogo_Rz.png");
 ChangeImage("sprCWLogo", path + @"\patch_resources\sprCWLogo.png");
 // CONNECT TO MOD SERVER & BETTER SERVER & BETTER BULLETIN BOARD
+// Bulletin board
 FindAndReplace("gml_Script_get_blog_post","http://nefault1s.online/Blog.php", "http://web-chao-resort-island-x.herokuapp.com/blog"); // Better Server + Mod Infos
 FindAndReplace("gml_Object_objBulletinBoard_Create_0", "check_times = 10", "check_times = 1024"); // More than 10 news (Unlimited ?)
 FindAndReplace("gml_Object_objBulletinBoard_Create_0", "for (l = 0; l < 10; l++)", "for (l = 0; l < check_times; l++)"); // More than 10 news (Unlimited ?)
+// Updates
 FindAndReplace("gml_Object_objCWUpdates_Alarm_0", "http://n1st-update.my-free.website/", "https://github.com/Kugge/Chao-Resort-Island-X/releases/latest/"); // Change update website
 FindAndReplace("gml_Script_get_update", "http://nefault1s.online/Update.php", "http://web-chao-resort-island-x.herokuapp.com/update");
+FindAndReplace("gml_Object_objCWUpdates_Draw_0", "(file_progress / file_size)", "(file_progress / 64000000)"); // Approximation without file size
+FindAndReplace("gml_Object_objZipDownload_Draw_0", "file_size", "64000000"); // Approximation without file size
+Replace("gml_Object_objZipDownload_Other_62", path + @"\patch_resources\gml_Object_objZipDownload_Other_62.gml");
+Replace("gml_Object_objCWUpdates_Other_62", path + @"\patch_resources\gml_Object_objCWUpdates_Other_62.gml");
+
 
 /* 2- FIXES */
 // VSYNC FIX FOR MONITORS ABOVE 60 FPS
@@ -86,6 +104,7 @@ FindAndReplace("gml_Script_fresh_data", "v_sync = 0", "v_sync = 1"); // Vsync en
 Append("gml_Object_objChaoControl_Create_0", "display_reset(0, 1)\n"); // Vsync mode
 // FPS IN DEBUGGING MENU
 FindAndReplace("gml_Object_objChaoHUD_Draw_0", "ing(gamepad_axis_value(0, gp_axislv))", "ing(fps)");
+
 
 /* REQUIRED FOR PLAYER MODS */
 FindAndReplace("gml_Object_objCharacter_Create_0", "max_char = 5", "max_char = 7"); // Unlock Chars
