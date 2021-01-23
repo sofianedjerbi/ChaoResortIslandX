@@ -96,7 +96,8 @@ FindAndReplace("gml_Object_objCWUpdates_Draw_0", "(file_progress / file_size)", 
 FindAndReplace("gml_Object_objZipDownload_Draw_0", "file_size", "64000000"); // Approximation without file size
 Replace("gml_Object_objZipDownload_Other_62", path + @"\patch_resources\gml_Object_objZipDownload_Other_62.gml");
 Replace("gml_Object_objCWUpdates_Other_62", path + @"\patch_resources\gml_Object_objCWUpdates_Other_62.gml");
-
+// Secret
+FindAndReplace("gml_Script_get_secret_pass", "http://nefault1s.online/Secret.php", "https://web-chao-resort-island-x.herokuapp.com/secret")
 
 /* 2- FIXES */
 // VSYNC FIX FOR MONITORS ABOVE 60 FPS
