@@ -705,9 +705,15 @@ FindAndReplace("gml_Object_objChaoHUD_Draw_0", "ing(gamepad_axis_value(0, gp_axi
 /* REQUIRED FOR PLAYER MODS */
 FindAndReplace("gml_Object_objCharacter_Create_0", "max_char = 5", "max_char = 7"); // Unlock Chars
 
-/* 3- LATIKA MOD */
+/* 3- BETTER TRUMPET MOD */
+AddSound(PATH + @"\patch_resources\sndHorn4.wav");
+AddSound(PATH + @"\patch_resources\sndHorn5.wav");
+AddSound(PATH + @"\patch_resources\sndHorn6.wav");
+Replace("gml_Object_objCWPlayer_Other_10", PATH + @"\patch_resources\gml_Object_objCWPlayer_Other_10.gml");
 
-/* 4- CHAOS MOD */
+/* 4- LATIKA MOD */
+
+/* 5- CHAOS MOD */
 AddSprite(PATH + @"\patch_resources\sprCWPlayer8\"); // Corrected sprite
 AddSound(PATH + @"\patch_resources\vc0Pet.wav"); // Chaos 0 audio from SADX
 AddSound(PATH + @"\patch_resources\vc0Pet2.wav"); // Chaos 4 audio from SADX
