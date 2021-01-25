@@ -702,6 +702,7 @@ FindAndReplace("gml_Script_fresh_data", "v_sync = 0", "v_sync = 1"); // Vsync en
 Append("gml_Object_objChaoControl_Create_0", "display_reset(0, 1)\n"); // Vsync mode
 // FPS IN DEBUGGING MENU
 FindAndReplace("gml_Object_objChaoHUD_Draw_0", "ing(gamepad_axis_value(0, gp_axislv))", "ing(fps)");
+
 /* REQUIRED FOR PLAYER MODS */
 FindAndReplace("gml_Object_objCharacter_Create_0", "max_char = 5", "max_char = 7"); // Unlock Chars
 
