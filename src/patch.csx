@@ -710,6 +710,8 @@ FindAndReplace("gml_Object_objCharacter_Create_0", "max_char = 5", "max_char = 7
 AddSound(PATH + @"\patch_resources\sndHorn4.wav");
 AddSound(PATH + @"\patch_resources\sndHorn5.wav");
 AddSound(PATH + @"\patch_resources\sndHorn6.wav");
+AddSound(PATH + @"\patch_resources\sndHorn7.wav");
+AddSound(PATH + @"\patch_resources\sndHorn8.wav");
 Replace("gml_Object_objCWPlayer_Other_10", PATH + @"\patch_resources\gml_Object_objCWPlayer_Other_10.gml");
 
 /* 4- LATIKA MOD */

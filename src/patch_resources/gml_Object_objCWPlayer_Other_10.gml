@@ -444,8 +444,19 @@ if __b__ {
                                             alarm[3] = 275
                                           }
                                         else {
-                                            dd_sound = asset_get_index("sndHorn6")
-                                            alarm[3] = 715
+                                            rand = irandom(2)
+                                            if (rand == 0) {
+                                              dd_sound = asset_get_index("sndHorn6")
+                                              alarm[3] = 715
+                                            }
+                                            else if (rand == 1) {
+                                              dd_sound = asset_get_index("sndHorn7")
+                                              alarm[3] = 720
+                                            }
+                                            else if (rand == 2) {
+                                              dd_sound = asset_get_index("sndHorn8")
+                                              alarm[3] = 620
+                                            }
                                           }
                                         if (happiness_tl == 0) {
                                             scr_chao_mood((2 + prsn_music))
