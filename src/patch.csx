@@ -197,23 +197,23 @@ void AddSound(string path, string audio_group="ag_SFX")
 //=============================================================================
 //=============================================================================
 
-void AddSprite(string importFolder, ushort boundingWidth=64, ushort boundingHeight=64)
+void AddSprite(string importFolder, string name)
 {
   //Stop the script if there's missing sprite entries or w/e.
   string[] dirFiles = Directory.GetFiles(importFolder, "*.png", SearchOption.AllDirectories);
   System.IO.Directory.CreateDirectory("Packager");
   string sourcePath = importFolder;
   string searchPattern = "*.png";
-  string outName = "Packager/atlas.txt";
+  string outName = $"Packager/atlas_{name}.txt";
   int textureSize = 2048;
   int PaddingValue = 2;
   bool debug = false;
   Packer packer = new Packer();
   packer.Process(sourcePath, searchPattern, textureSize, PaddingValue, debug);
   packer.SaveAtlasses(outName);
+  string prefix = outName.Replace(Path.GetExtension(outName), "");
 
   // Import everything into UMT
-  string prefix = outName.Replace(Path.GetExtension(outName), "");
   int atlasCount = 0;
   foreach (Atlas atlas in packer.Atlasses)
   {
@@ -236,8 +236,8 @@ void AddSprite(string importFolder, ushort boundingWidth=64, ushort boundingHeig
               texturePageItem.TargetY = 0;
               texturePageItem.TargetWidth = (ushort)n.Bounds.Width;
               texturePageItem.TargetHeight = (ushort)n.Bounds.Height;
-              texturePageItem.BoundingWidth = boundingWidth;
-              texturePageItem.BoundingHeight = boundingHeight;
+              texturePageItem.BoundingWidth = (ushort)n.Bounds.Width;
+              texturePageItem.BoundingHeight = (ushort)n.Bounds.Height;
               texturePageItem.TexturePage = texture;
 
               // Add this texture to UMT
@@ -262,7 +262,7 @@ void AddSprite(string importFolder, ushort boundingWidth=64, ushort boundingHeig
                   newSprite.Name = spriteUTString;
                   newSprite.Width = (uint)n.Bounds.Width;
                   newSprite.Height = (uint)n.Bounds.Height;
-                  newSprite.BBoxMode = 2;
+                  newSprite.BBoxMode = 0;
                   newSprite.MarginLeft = 0;
                   newSprite.MarginRight = n.Bounds.Width - 1;
                   newSprite.MarginTop = 0;
@@ -285,7 +285,7 @@ void AddSprite(string importFolder, ushort boundingWidth=64, ushort boundingHeig
                       for (int x = 0; x < n.Bounds.Width; x++)
                       {
                           Color pixelColor = cloneBitmap.GetPixel(x, y);
-                          maskingBitArray[y * width + x] = (pixelColor.A > 0);
+                          maskingBitArray[y * width + x] = true;
                       }
                   }
                   BitArray tempBitArray = new BitArray(width * n.Bounds.Height);
@@ -293,7 +293,7 @@ void AddSprite(string importFolder, ushort boundingWidth=64, ushort boundingHeig
                   {
                       for (int j = 0; j < 8; j++)
                       {
-                          tempBitArray[j + i] = maskingBitArray[-(j - 7) + i];
+                          tempBitArray[j + i] = true;
                       }
                   }
                   int numBytes;
@@ -650,11 +650,6 @@ void Replace(string name, string path)
   ChangeSelection(code);
 }
 
-void LoadSprite(string path)
-{
-  AddSprite(path);
-}
-
 /********************** EDITOR **********************/
 //=============================================================================
 /********************** PATCH **********************
@@ -666,6 +661,7 @@ DecompileContext context = new DecompileContext(Data, false); // Decompiler
 
 // Var - Context //
 string PATH = Path.GetDirectoryName(ScriptPath);
+string RESOURCES = PATH + @"\patch_resources\";
 string ver_raw = File.ReadAllText(PATH + @"\..\Version.txt");
 string MOD_VER_STRING = ver_raw.Substring(ver_raw.IndexOf("MOD=") + 4);
 string mod_ver_int_raw = ver_raw.Substring(ver_raw.IndexOf("XVERSION=") + 9);
@@ -679,8 +675,8 @@ Append("gml_Object_objChaoControl_Create_0", $"global.x_version = \"{MOD_VER_STR
 Append("gml_Object_objChaoControl_Create_0", $"global.x_version_int = {MOD_VER_INT}"); // INT for updates
 FindAndReplace("gml_Object_objCWCredits_Draw_0", "chao_v))\n", "chao_v))\ndraw_text((view_xview[0] + 210), ((view_yview[0] + floor(ymov)) + 190), (\"Mod Version: \" + global.x_version))\n"); // Display
 // CHANGE LOGOs
-ChangeImage("sprCWLogo_Rz", PATH + @"\patch_resources\sprCWLogo_Rz.png");
-ChangeImage("sprCWLogo", PATH + @"\patch_resources\sprCWLogo.png");
+ChangeImage("sprCWLogo_Rz", RESOURCES + @"Logo\sprCWLogo_Rz.png");
+ChangeImage("sprCWLogo", RESOURCES + @"Logo\sprCWLogo.png");
 // CONNECT TO MOD SERVER & BETTER SERVER & BETTER BULLETIN BOARD
 // Bulletin board
 FindAndReplace("gml_Script_get_blog_post","http://nefault1s.online/Blog.php", "http://web-chao-resort-island-x.herokuapp.com/blog"); // Better Server + Mod Infos
@@ -691,8 +687,8 @@ FindAndReplace("gml_Object_objCWUpdates_Alarm_0", "http://n1st-update.my-free.we
 FindAndReplace("gml_Script_get_update", "http://nefault1s.online/Update.php", "http://web-chao-resort-island-x.herokuapp.com/update");
 FindAndReplace("gml_Object_objCWUpdates_Draw_0", "(file_progress / file_size)", "(file_progress / 65000000)"); // Approximation without file size
 FindAndReplace("gml_Object_objZipDownload_Draw_0", "file_size", "65000000"); // Approximation without file size
-Replace("gml_Object_objZipDownload_Other_62", PATH + @"\patch_resources\gml_Object_objZipDownload_Other_62.gml");
-Replace("gml_Object_objCWUpdates_Other_62", PATH + @"\patch_resources\gml_Object_objCWUpdates_Other_62.gml");
+Replace("gml_Object_objZipDownload_Other_62", RESOURCES + @"GML\gml_Object_objZipDownload_Other_62.gml");
+Replace("gml_Object_objCWUpdates_Other_62", RESOURCES + @"GML\gml_Object_objCWUpdates_Other_62.gml");
 // Secret
 FindAndReplace("gml_Script_get_secret_pass", "http://nefault1s.online/Secret.php", "https://web-chao-resort-island-x.herokuapp.com/secret");
 
@@ -703,26 +699,49 @@ Append("gml_Object_objChaoControl_Create_0", "display_reset(0, 1)\n"); // Vsync 
 // FPS IN DEBUGGING MENU
 FindAndReplace("gml_Object_objChaoHUD_Draw_0", "ing(gamepad_axis_value(0, gp_axislv))", "ing(fps)");
 
-/* REQUIRED FOR PLAYER MODS */
-FindAndReplace("gml_Object_objCharacter_Create_0", "max_char = 5", "max_char = 7"); // Unlock Chars
-
 /* 3- BETTER TRUMPET MOD */
-AddSound(PATH + @"\patch_resources\sndHorn4.wav");
-AddSound(PATH + @"\patch_resources\sndHorn5.wav");
-AddSound(PATH + @"\patch_resources\sndHorn6.wav");
-AddSound(PATH + @"\patch_resources\sndHorn7.wav");
-AddSound(PATH + @"\patch_resources\sndHorn8.wav");
-Replace("gml_Object_objCWPlayer_Other_10", PATH + @"\patch_resources\gml_Object_objCWPlayer_Other_10.gml");
+AddSound(RESOURCES + @"Horns\sndHorn4.wav");
+AddSound(RESOURCES + @"Horns\sndHorn5.wav");
+AddSound(RESOURCES + @"Horns\sndHorn6.wav");
+AddSound(RESOURCES + @"Horns\sndHorn7.wav");
+AddSound(RESOURCES + @"Horns\sndHorn8.wav");
+Replace("gml_Object_objCWPlayer_Other_10", RESOURCES + @"GML\gml_Object_objCWPlayer_Other_10.gml");
 
-/* 4- LATIKA MOD */
+/* 4- NEW ITEMS ! */ // TODO : NOT CENTERED
+/*
+AddSprite(RESOURCES + @"Headbands\sprH_Headband\", "sprH_Headband"); // New headband
+AddSprite(RESOURCES + @"Headbands\sprH_HeadbandWhite\", "sprH_HeadbandWhite"); // New headband
+AddSprite(RESOURCES + @"Headbands\sprH_HeadbandRed\", "sprH_HeadbandRed"); // New headband
+AddSprite(RESOURCES + @"Headbands\sprH_HeadbandBlue\", "sprH_HeadbandBlue"); // New headband
+AddSprite(RESOURCES + @"Headbands\sprH_HeadbandYellow\", "sprH_HeadbandYellow"); // New headband
+AddSprite(RESOURCES + @"Headbands\sprH_HeadbandPurple\", "sprH_HeadbandPurple"); // New headband
+Replace("gml_Object_objShopList_Create_0", RESOURCES + @"GML\gml_Object_objShopList_Create_0.gml");
+Replace("gml_Script_scr_hat_assign", RESOURCES + @"GML\gml_Script_scr_hat_assign.gml");
+Replace("gml_Object_objCWH_Model_Alarm_0", RESOURCES + @"GML\gml_Object_objCWH_Model_Alarm_0.gml");
+*/
 
-/* 5- CHAOS MOD */
-AddSprite(PATH + @"\patch_resources\sprCWPlayer8\"); // Corrected sprite
-AddSound(PATH + @"\patch_resources\vc0Pet.wav"); // Chaos 0 audio from SADX
-AddSound(PATH + @"\patch_resources\vc0Pet2.wav"); // Chaos 4 audio from SADX
-FindAndReplace("gml_Object_objCWPlayer_Alarm_0", "case \"Cream\"", "case \"Chaos\":\nvoice_p = choose(asset_get_index(\"vc0Pet\"), asset_get_index(\"vc0Pet2\"))\naudio_play_sound(voice_p, 5, false)\nbreak\ncase \"Cream\"");
-FindAndReplace("gml_Object_objCWPlayer_Other_15", "case \"Cream\"", "case \"Chaos\":\nvoice_p = choose(asset_get_index(\"vc0Pet\"), asset_get_index(\"vc0Pet2\"))\naudio_play_sound(voice_p, 5, false)\nbreak\ncase \"Cream\"");
+/*** REQUIRED FOR PLAYER MODS ***/
+Replace("gml_Object_objCharacter_Create_0", RESOURCES + @"GML\gml_Object_objCharacter_Create_0.gml"); // Unlock Chars
 
+/* 5- LATIKA MOD */
+AddSprite(RESOURCES + @"sprCWPlayer7\", "sprCWPlayer7"); // New sprite
+AddSound(RESOURCES + @"PlayerNoises\vcTKPet.wav");
+AddSound(RESOURCES + @"PlayerNoises\vcTKPet2.wav");
+AddSound(RESOURCES + @"PlayerNoises\vcTKPick.wav");
+AddSound(RESOURCES + @"PlayerNoises\vcTKPick2.wav");
+FindAndReplace("gml_Object_objCWPlayer_Alarm_0", "case \"Cream\"", "case \"Tikal\":\nvoice_p = choose(asset_get_index(\"vcCPick\"), asset_get_index(\"vcTKPick2\"))\naudio_play_sound(voice_p, 5, false)\nbreak\ncase \"Cream\"");
+FindAndReplace("gml_Object_objCWPlayer_Other_15", "case \"Cream\"", "case \"Tikal\":\nvoice_p = choose(asset_get_index(\"vcTKPet\"), asset_get_index(\"vcTKPet2\"))\naudio_play_sound(voice_p, 5, false)\nbreak\ncase \"Cream\"");
+FindAndReplace("gml_Script_scr_init_convo", "resort_c()\n", "resort_c()\nglobal.max_char = 6"); // Update max_char count
+Replace("gml_Script_dia_resort_c", RESOURCES + @"GML\gml_Script_dia_resort_c.gml");
+
+/* 6- CHAOS MOD */ // TODO : UGLY SPRITE
+/*
+AddSprite(RESOURCES + @"sprCWPlayer8\", "sprCWPlayer8"); // Corrected sprite
+AddSound(RESOURCES + @"PlayerNoises\vc0Pet.wav"); // Chaos 0 audio from SADX
+AddSound(RESOURCES + @"PlayerNoises\vc0Pet2.wav"); // Chaos 4 audio from SADX
+FindAndReplace("gml_Object_objCWPlayer_Alarm_0", "case \"Tikal\"", "case \"Chaos\":\nvoice_p = choose(asset_get_index(\"vc0Pet\"), asset_get_index(\"vc0Pet2\"))\naudio_play_sound(voice_p, 5, false)\nbreak\ncase \"Tikal\"");
+FindAndReplace("gml_Object_objCWPlayer_Other_15", "case \"Tikal\"", "case \"Chaos\":\nvoice_p = choose(asset_get_index(\"vc0Pet\"), asset_get_index(\"vc0Pet2\"))\naudio_play_sound(voice_p, 5, false)\nbreak\ncase \"Tikal\"");
+*/
 
 /********************** PATCH **********************/
 //=============================================================================
