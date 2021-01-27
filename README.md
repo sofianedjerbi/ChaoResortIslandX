@@ -1,14 +1,14 @@
 # Chao Resort Island X
-<img align="center" alt="Logo" src="src/patch_resources/sprCWLogo_Rz.png" />  
+<img align="center" alt="Logo" src="src/patch_resources/Logo/sprCWLogo_Rz.png" />  
 
 A modded version of Chao Resort Island.  
 **I will not share the decompiled code !** According to the original license.  
 All credits goes to **SEGA** & **[Nefault1st](https://twitter.com/nefault1st)**.  
 ![Discord Shield](https://discordapp.com/api/guilds/773578180036263936/widget.png?style=shield)  
 
-<img align="center" alt="Logo" src="tikal.gif" />  
+<img align="center" alt="Tikal Animation" src="tikal.gif" />  
 
-# ADDED IN THIS MOD
+# FEATURES
 - Tikal char mod (Unlockable!)
 - VSYNC Bugfix (144hz)
 - Better trumpet mod (New songs!)
