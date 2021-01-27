@@ -685,8 +685,8 @@ FindAndReplace("gml_Object_objBulletinBoard_Create_0", "for (l = 0; l < 10; l++)
 // Updates
 FindAndReplace("gml_Object_objCWUpdates_Alarm_0", "http://n1st-update.my-free.website/", "https://github.com/Kugge/Chao-Resort-Island-X/releases/latest/"); // Change update website
 FindAndReplace("gml_Script_get_update", "http://nefault1s.online/Update.php", "http://web-chao-resort-island-x.herokuapp.com/update");
-FindAndReplace("gml_Object_objCWUpdates_Draw_0", "(file_progress / file_size)", "(file_progress / 65000000)"); // Approximation without file size
-FindAndReplace("gml_Object_objZipDownload_Draw_0", "file_size", "65000000"); // Approximation without file size
+FindAndReplace("gml_Object_objCWUpdates_Draw_0", "(file_progress / file_size)", "(file_progress / 74000000)"); // Approximation without file size
+FindAndReplace("gml_Object_objZipDownload_Draw_0", "file_size", "74000000"); // Approximation without file size
 Replace("gml_Object_objZipDownload_Other_62", RESOURCES + @"GML\gml_Object_objZipDownload_Other_62.gml");
 Replace("gml_Object_objCWUpdates_Other_62", RESOURCES + @"GML\gml_Object_objCWUpdates_Other_62.gml");
 // Secret
@@ -723,7 +723,7 @@ Replace("gml_Object_objCWH_Model_Alarm_0", RESOURCES + @"GML\gml_Object_objCWH_M
 /*** REQUIRED FOR PLAYER MODS ***/
 Replace("gml_Object_objCharacter_Create_0", RESOURCES + @"GML\gml_Object_objCharacter_Create_0.gml"); // Unlock Chars
 
-/* 5- LATIKA MOD */
+/* 5- TIKAL MOD */
 AddSprite(RESOURCES + @"sprCWPlayer7\", "sprCWPlayer7"); // New sprite
 AddSound(RESOURCES + @"PlayerNoises\vcTKPet.wav");
 AddSound(RESOURCES + @"PlayerNoises\vcTKPet2.wav");
