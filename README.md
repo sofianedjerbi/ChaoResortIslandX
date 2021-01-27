@@ -6,22 +6,25 @@ A modded version of Chao Resort Island.
 All credits goes to **SEGA** & **[Nefault1st](https://twitter.com/nefault1st)**.  
 ![Discord Shield](https://discordapp.com/api/guilds/773578180036263936/widget.png?style=shield)  
 
+<img align="center" alt="Logo" src="tikal.gif" />  
+
+# ADDED IN THIS MOD
+- Tikal char mod (Unlockable!)
+- VSYNC Bugfix (144hz)
+- Better trumpet mod (New songs!)
+- Mod servers & secrets (No latency)
+
 # INCOMING
+- Second Chao evolution
 - Blaze char mod
 - Metal char mod
 - Animal mod
 - Better Bunga mod
-- Intelligent Chao mod
 - Multiplayer mod
 - Karate Mod (SA2)
-- Bugfixes
+- Bugfixes if needed
 
 # WORKING ON
-- Tikal char mod
 - Colored Headbands mod
-
-# DONE
-- Mod servers & secrets (No latency)
 - Chao 0 char mod
-- Better trumpet mod
-- VSYNC Bugfix (144hz)
+- Better Chao 0 sprite (improvements)
