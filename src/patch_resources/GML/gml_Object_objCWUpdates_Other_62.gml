@@ -17,7 +17,7 @@ if __b__ {
                 chao_vt = ""
                 get_u = real(string_separate_beg(result, "["))
                 Get_download_link = string_separate_mid(result, "[", "]")
-                mod_ver = real(string_separate_mid(result, "]", "{"))
+                mod_ver = string_separate_mid(result, "]", "{")
                 manual_limit = real(string_separate_end(result, "{"))
                 show_debug_message(string(get_u))
                 show_debug_message(Get_download_link)
@@ -52,7 +52,7 @@ if __b__ {
                     check_version = 0
                     select_update = 1
                 }
-                else if (mod_ver > global.x_version_int || get_u > get_chao_version) {
+                else if (get_u > get_chao_version) {
                     chao_vt = string(get_u)
                     chao_vt = string_insert(".", chao_vt, 2)
                     chao_vt = string_insert(".", chao_vt, 4)
@@ -70,6 +70,25 @@ if __b__ {
                     result = ""
                     check_version = 0
                     select_update = 1
+                }
+                else if (real(mod_ver) > global.x_version_int) {
+                  chao_vt = mod_ver
+                  chao_vt = string_insert(".", chao_vt, 2)
+                  chao_vt = string_insert(".", chao_vt, 4)
+                  prompt_n = 2
+                  connect = 0
+                  if (global.os_config == "windows")
+                      scr_cw_prompt((("There's an update available for download.#Would you like to download#(MOD UPDATE) v" + chao_vt) + "?##Your save data will not be affected!"), 2, "Yes", "No", "", "Y", 1)
+                  else {
+                      scr_cw_prompt("There's an update available for download.#Would you like to visit the download page?", 2, "Yes", "No", "", "Y", 1)
+                      prompt_n = 3
+                  }
+                  texthandle = -1
+                  connect = 0
+                  alarm[1] = -1
+                  result = ""
+                  check_version = 0
+                  select_update = 1
                 }
                 else if (update_check == 0) {
                     alarm[1] = -1

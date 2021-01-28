@@ -197,7 +197,7 @@ void AddSound(string path, string audio_group="ag_SFX")
 //=============================================================================
 //=============================================================================
 
-void AddSprite(string importFolder, string name)
+void AddSprite(string importFolder, string name, int origin_x=0, int origin_y=0)
 {
   //Stop the script if there's missing sprite entries or w/e.
   string[] dirFiles = Directory.GetFiles(importFolder, "*.png", SearchOption.AllDirectories);
@@ -267,8 +267,8 @@ void AddSprite(string importFolder, string name)
                   newSprite.MarginRight = n.Bounds.Width - 1;
                   newSprite.MarginTop = 0;
                   newSprite.MarginBottom = n.Bounds.Height - 1;
-                  newSprite.OriginX = 0;
-                  newSprite.OriginY = 0;
+                  newSprite.OriginX = origin_x;
+                  newSprite.OriginY = origin_y;
                   if (frame > 0)
                   {
                       for (int i = 0; i < frame; i++)
@@ -708,17 +708,16 @@ AddSound(RESOURCES + @"Horns\sndHorn8.wav");
 Replace("gml_Object_objCWPlayer_Other_10", RESOURCES + @"GML\gml_Object_objCWPlayer_Other_10.gml");
 
 /* 4- NEW ITEMS ! */ // TODO : NOT CENTERED
-/*
-AddSprite(RESOURCES + @"Headbands\sprH_Headband\", "sprH_Headband"); // New headband
-AddSprite(RESOURCES + @"Headbands\sprH_HeadbandWhite\", "sprH_HeadbandWhite"); // New headband
-AddSprite(RESOURCES + @"Headbands\sprH_HeadbandRed\", "sprH_HeadbandRed"); // New headband
-AddSprite(RESOURCES + @"Headbands\sprH_HeadbandBlue\", "sprH_HeadbandBlue"); // New headband
-AddSprite(RESOURCES + @"Headbands\sprH_HeadbandYellow\", "sprH_HeadbandYellow"); // New headband
-AddSprite(RESOURCES + @"Headbands\sprH_HeadbandPurple\", "sprH_HeadbandPurple"); // New headband
+AddSprite(RESOURCES + @"Headbands\sprH_HeadbandBlack\", "sprH_HeadbandBlack", 10, 11); // New headband
+AddSprite(RESOURCES + @"Headbands\sprH_HeadbandWhite\", "sprH_HeadbandWhite", 10, 11); // New headband
+AddSprite(RESOURCES + @"Headbands\sprH_HeadbandRed\", "sprH_HeadbandRed", 10, 11); // New headband
+AddSprite(RESOURCES + @"Headbands\sprH_HeadbandBlue\", "sprH_HeadbandBlue", 10, 11); // New headband
+AddSprite(RESOURCES + @"Headbands\sprH_HeadbandYellow\", "sprH_HeadbandYellow", 10, 11); // New headband
+AddSprite(RESOURCES + @"Headbands\sprH_HeadbandPurple\", "sprH_HeadbandPurple", 10, 11); // New headband
 Replace("gml_Object_objShopList_Create_0", RESOURCES + @"GML\gml_Object_objShopList_Create_0.gml");
 Replace("gml_Script_scr_hat_assign", RESOURCES + @"GML\gml_Script_scr_hat_assign.gml");
 Replace("gml_Object_objCWH_Model_Alarm_0", RESOURCES + @"GML\gml_Object_objCWH_Model_Alarm_0.gml");
-*/
+
 
 /*** REQUIRED FOR PLAYER MODS ***/
 Replace("gml_Object_objCharacter_Create_0", RESOURCES + @"GML\gml_Object_objCharacter_Create_0.gml"); // Unlock Chars
