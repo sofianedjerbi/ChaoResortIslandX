@@ -4,7 +4,7 @@ ds_list_add(msg_list, "in fact, you're one of the longest visiting tenants i've 
 ds_list_add(msg_list, "we actually have an exclusive...and expensive RESORT that i keep under wraps. i'm talking about the SPRING RESORT!")
 ds_list_add(msg_list, "there's even more SPACE for you and your chao to move around in.")
 ds_list_add(msg_list, "i really hope you'll be able to make use of this resort.")
-ds_list_add(msg_list, "...by the way, i think someone else is available to take care of everything.") // Added
+ds_list_add(msg_list, "...by the way, i think someone joined your team.") // Added
 ds_list_add(msg_list, "...someone you might know.") // Added
 ds_list_add(msg_list, "i'll see you around!")
 _msg = ds_list_find_value(msg_list, 0)
