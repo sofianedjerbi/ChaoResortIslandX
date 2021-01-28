@@ -76,7 +76,7 @@ switch feature {
         item_name =  "Red Headband"
         break
     case 25:
-        item_name =  "Yellow Headband"
+        item_name =  "Golden Headband"
         break
     case 26:
         item_name =  "Purple Headband"
