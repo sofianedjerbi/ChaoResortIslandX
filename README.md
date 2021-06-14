@@ -3,8 +3,7 @@
 
 A modded version of Chao Resort Island.  
 **I will not share the decompiled code !** According to the original license.  
-All credits goes to **SEGA** & **[Nefault1st](https://twitter.com/nefault1st)**.  
-Join our [Discord](https://discord.gg/vmxGht3yqe)!  
+All credits goes to **SEGA** & **[Nefault1st](https://twitter.com/nefault1st)**.   
 
 <div style="text-align:center"><img align="center" alt="Tikal Animation" src="tikal.gif" /></div>
 
