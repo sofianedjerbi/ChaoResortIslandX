@@ -1,5 +1,6 @@
-/* BY @KUGGE0
-   THANKS TO @NEFAUL1ST !!!
+/*  BY @KUGGE0
+    THANKS TO @NEFAUL1ST !!!
+
 */
 using System;
 using System.IO;
@@ -16,12 +17,15 @@ using static UndertaleModLib.UndertaleData;
 using static UndertaleModLib.Models.UndertaleSound;
 
 EnsureDataLoaded();
+//================== UNDERTALE MOD TOOL NATIVE FUNCTIONS ======================
 //=============================================================================
+// Get current working folder
 string GetFolder(string path)
 {
     return Path.GetDirectoryName(path) + Path.DirectorySeparatorChar;
 }
 
+// Add a sound to the game.
 void AddSound(string path, string audio_group="ag_SFX")
 {
   // By Jockeholm & Nik the Neko & Grossley - Version 7
@@ -64,8 +68,8 @@ void AddSound(string path, string audio_group="ag_SFX")
 	}
 
   if (needAGRP && usesAGRP && embedSound)
-	{
-		ifRightAGRP  = (needAGRP && embedSound);
+    {
+	    ifRightAGRP  = (needAGRP && embedSound);
 		if (ifRightAGRP)
 		{
 			while (audioGroupID == -1)
@@ -89,7 +93,7 @@ void AddSound(string path, string audio_group="ag_SFX")
 					};
 					Data.AudioGroups.Add(newAudioGroup);
 				}
-			}
+		    }
 		}
 		else
 		{
@@ -194,9 +198,10 @@ void AddSound(string path, string audio_group="ag_SFX")
 		ChangeSelection(existing_snd);
 	}
 }
-//=============================================================================
+
 //=============================================================================
 
+// Add a sprite to the game
 void AddSprite(string importFolder, string name, int origin_x=0, int origin_y=0)
 {
   //Stop the script if there's missing sprite entries or w/e.
@@ -373,6 +378,7 @@ public class Packer
         Error = new StringWriter();
     }
 
+    // Process any texture, helper function
     public void Process(string _SourceDir, string _Pattern, int _AtlasSize, int _Padding, bool _DebugMode)
     {
         Padding = _Padding;
@@ -409,6 +415,7 @@ public class Packer
         }
     }
 
+    // Save game textures (to png)
     public void SaveAtlasses(string _Destination)
     {
         int atlasCount = 0;
@@ -446,6 +453,7 @@ public class Packer
         tw.Close();
     }
 
+    // Scan a full directory for textures
     private void ScanForTextures(string _Path, string _Wildcard)
     {
         DirectoryInfo di = new DirectoryInfo(_Path);
@@ -475,6 +483,7 @@ public class Packer
         }
     }
 
+    // Horizontal tileset split
     private void HorizontalSplit(Node _ToSplit, int _Width, int _Height, List<Node> _List)
     {
         Node n1 = new Node();
@@ -495,6 +504,7 @@ public class Packer
             _List.Add(n2);
     }
 
+    // Vertical tileset split
     private void VerticalSplit(Node _ToSplit, int _Width, int _Height, List<Node> _List)
     {
         Node n1 = new Node();
@@ -515,6 +525,7 @@ public class Packer
             _List.Add(n2);
     }
 
+    // Fetch texture info (width, height)
     private TextureInfo FindBestFitForNode(Node _Node, List<TextureInfo> _Textures)
     {
         TextureInfo bestFit = null;
@@ -556,6 +567,7 @@ public class Packer
         return bestFit;
     }
 
+    // Texture cartography
     private List<TextureInfo> LayoutAtlas(List<TextureInfo> _Textures, Atlas _Atlas)
     {
         List<Node> freeList = new List<Node>();
@@ -591,6 +603,7 @@ public class Packer
         return textures;
     }
 
+    // Full tileset to image
     private Image CreateAtlasImage(Atlas _Atlas)
     {
         Image img = new Bitmap(_Atlas.Width, _Atlas.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -616,6 +629,7 @@ public class Packer
 /********************** EDITOR *********************
    (High-level hacky data.win editor)
 */
+
 /* Replace a string by another in a GML file */
 void FindAndReplace(string name, string find, string replace)
 {
@@ -733,7 +747,7 @@ FindAndReplace("gml_Object_objCWPlayer_Other_15", "case \"Cream\"", "case \"Tika
 FindAndReplace("gml_Script_scr_init_convo", "resort_c()\n", "resort_c()\nglobal.max_char = 6"); // Update max_char count
 Replace("gml_Script_dia_resort_c", RESOURCES + @"GML\gml_Script_dia_resort_c.gml");
 
-/* 6- CHAOS MOD */ // TODO : UGLY SPRITE
+/* 6- CHAOS MOD */ // TODO : FIX SPRITE
 /*
 AddSprite(RESOURCES + @"sprCWPlayer8\", "sprCWPlayer8"); // Corrected sprite
 AddSound(RESOURCES + @"PlayerNoises\vc0Pet.wav"); // Chaos 0 audio from SADX
@@ -742,5 +756,3 @@ FindAndReplace("gml_Object_objCWPlayer_Alarm_0", "case \"Tikal\"", "case \"Chaos
 FindAndReplace("gml_Object_objCWPlayer_Other_15", "case \"Tikal\"", "case \"Chaos\":\nvoice_p = choose(asset_get_index(\"vc0Pet\"), asset_get_index(\"vc0Pet2\"))\naudio_play_sound(voice_p, 5, false)\nbreak\ncase \"Tikal\"");
 */
 
-/********************** PATCH **********************/
-//=============================================================================
